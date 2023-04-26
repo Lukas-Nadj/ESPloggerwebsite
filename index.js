@@ -168,7 +168,7 @@ setInterval(function () {
   //xhttp.open("GET", "http://"+window.location.hostname+"/temperature", true);
   xhttp.open(
     "GET",
-    "http://" + document.getElementById("source").value + "/voltage"+window.location.search,
+    "https://" + document.getElementById("source").value + "/voltagedata"+window.location.search,
     true
   );
   xhttp.send();
