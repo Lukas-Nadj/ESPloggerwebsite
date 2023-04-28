@@ -702,7 +702,7 @@ function sendFile(){
   var xhttp = new XMLHttpRequest();
   xhttp.open(
     "GET",
-    "http://" + document.getElementById("source").value + "/voltagedata"+window.location.search,
+    "https://" + document.getElementById("source").value + "/voltagedata"+window.location.search,
     true
   );
   xhttp.send();
