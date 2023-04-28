@@ -50,8 +50,9 @@ function clearList() {
   var listDiv = document.getElementById("list");
   listDiv.innerHTML = "";
 }
-function addLinesToList(url) {
+function addLinesToList() {
   clearList();
+  const url = "http://"+document.getElementById("source").value+"/data";
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url);
   xhr.onload = function () {
