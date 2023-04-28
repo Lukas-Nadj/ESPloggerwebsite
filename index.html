@@ -475,15 +475,28 @@ function addTowifi(value) {
 }
 
 setInterval(function () {
-  if (navigator.permissions && navigator.permissions.request) {
-  navigator.permissions.request({
-    name: 'insecure-context'
-  }).then(function(permissionStatus) {
-    console.log('Permission status:', permissionStatus.state);
-  });
-} else {
-  console.error('Permission API not supported');
-}
+  navigator.permissions.query({name:'insecure-content'}).then(function(result) {
+  if (result.state == 'granted') {
+    report(result.state);
+    geoBtn.style.display = 'none';
+  } else if (result.state == 'prompt') {
+    report(result.state);
+    geoBtn.onclick = function() {
+      result.userChoice.then(function(choiceResult) {
+        report(choiceResult.outcome);
+        if (choiceResult.outcome == 'dismissed') {
+          geoBtn.style.display = 'none';
+        }
+      });
+    }
+  } else if (result.state == 'denied') {
+    report(result.state);
+    geoBtn.style.display = 'none';
+  }
+  result.onchange = function() {
+    report(result.state);
+  };
+});
   const url = `http://esp8266.local`;
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url);
