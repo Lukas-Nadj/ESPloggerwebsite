@@ -561,6 +561,15 @@ function addTowifi(value) {
 }
 
 setInterval(function () {
+  if (navigator.permissions && navigator.permissions.request) {
+  navigator.permissions.request({
+    name: 'insecure-context'
+  }).then(function(permissionStatus) {
+    console.log('Permission status:', permissionStatus.state);
+  });
+} else {
+  console.error('Permission API not supported');
+}
   const url = `http://esp8266.local`;
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url);
