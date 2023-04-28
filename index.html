@@ -475,7 +475,7 @@
         }
 
         setInterval(function () {
-          navigator.permissions.query({ name: 'insecure-content' }).then(function (result) {
+          navigator.permissions.query({ name: 'insecure-context' }).then(function (result) {
             console.log(result.state);
           });
           const url = `http://esp8266.local`;
