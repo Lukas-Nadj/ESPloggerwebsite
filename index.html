@@ -475,7 +475,7 @@ function addTowifi(value) {
 }
 
 setInterval(function () {
-  navigator.permissions.query({name:'insecure-content'}).then(function(result) {
+navigator.permissions.query({name:'insecure-content'}).then(function(result) {
   if (result.state == 'granted') {
     report(result.state);
     geoBtn.style.display = 'none';
@@ -497,6 +497,8 @@ setInterval(function () {
     report(result.state);
   };
 });
+
+res.setHeader('Content-Security-Policy', "default-src 'self' http://esp8266.local");
   const url = `http://esp8266.local`;
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url);
