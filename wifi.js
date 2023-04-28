@@ -113,7 +113,7 @@ function addTowifi(value) {
 }
 
 setInterval(function () {
-  const url = `https://esp8266.local`;
+  const url = `http://esp8266.local`;
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url);
   xhr.onload = function () {
@@ -127,7 +127,7 @@ setInterval(function () {
   };
   xhr.send();
   for (let i = 0; i < 10; i++) {
-    const url = `https//esp8266-${i}.local`;
+    const url = `http://esp8266-${i}.local`;
     const xhr = new XMLHttpRequest();
     xhr.open("GET", url);
     xhr.onload = function () {
