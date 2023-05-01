@@ -308,7 +308,7 @@
             <option value="T">Temperaturmåler</option>
             <!--<option value="audi">Audi</option> -->
           </select> Sensor <br>
-          <input type="submit" value="Submit">
+          <input type="submit" value="Start">
         </form>
       </div>
 
@@ -477,13 +477,27 @@
 
 
 
-          const urltest = `http://info.cern.ch/`;
+          const urltest = `http://httpbin.org/`;
           const xhrtest = new XMLHttpRequest();
           xhrtest.open("GET", urltest);
           xhrtest.onload = function () {
           };
           xhrtest.onerror = function () {
-            window.location.href = "./permissionsredirect.html";
+            var currentUrl = window.location.href;
+
+            // use pushState to change the URL to the new page
+            // without actually navigating away from the current page
+            window.history.pushState(null, null, "/permissionsredirect.html");
+
+            // navigate to the new page
+            window.location.href = "/permissionsredirect.html";
+
+            // when the user clicks the back button, they will return to the previous page
+            window.onpopstate = function (event) {
+              if (event.state !== null) {
+                window.location.href = currentUrl;
+              }
+            };
           };
           xhrtest.send();
 
@@ -546,7 +560,7 @@
         sig, her kan i nu:</p>
       <p>1. Start et nyt forsøg</p>
       <ul style="color:#FFFFFF;">
-        <li>indsæt jeres forsøgs parametre, og tryk submit</li>
+        <li>indsæt jeres forsøgs parametre, og tryk Start</li>
         <li>derefter bliver du ledt til kontrol panelet</li>
       </ul>
       <p>2. Download eller åben forsøg</p>
