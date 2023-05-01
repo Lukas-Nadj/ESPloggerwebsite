@@ -1,4 +1,3 @@
-
 function addToList(value) {
   // Create new div with class "item"
   var newItem = document.createElement("div");
@@ -24,7 +23,7 @@ function addToList(value) {
   var deleteLink = document.createElement("a");
   deleteLink.textContent = "Slet";
   // Add an index to the ID of the Delete button
-  deleteLink.id = "delete-" + (document.getElementsByClassName("item").length + 1);
+  deleteLink.id ="delete-" + (document.getElementsByClassName("item").length + 1);
   newDelete.appendChild(deleteLink);
   newItem.appendChild(newDelete);
 
@@ -42,11 +41,14 @@ function clearList() {
   listDiv.innerHTML = "";
 }
 
-function sendFile(){
+function sendFile() {
   var xhttp = new XMLHttpRequest();
   xhttp.open(
     "GET",
-    "https://" + document.getElementById("source").value + "/voltage"+window.location.search,
+    "https://" +
+      document.getElementById("source").value +
+      "/voltage" +
+      window.location.search,
     true
   );
   xhttp.send();
@@ -55,25 +57,23 @@ function sendFile(){
 function addLinesToList(url) {
   clearList();
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-  xhr.onload = function() {
+  xhr.open("GET", url);
+  xhr.onload = function () {
     if (xhr.status === 200) {
       // Split the response into lines
-      const lines = xhr.responseText.split('\n');
+      const lines = xhr.responseText.split("\n");
       // Loop through the lines and add them to the list
-      lines.forEach(function(line) {
-        if (line.trim() !== '') {
+      lines.forEach(function (line) {
+        if (line.trim() !== "") {
           addToList(line.trim());
         }
       });
     } else {
-      console.error('Request failed.  Returned status of ' + xhr.status);
+      console.error("Request failed.  Returned status of " + xhr.status);
     }
   };
   xhr.send();
 }
-
-
 
 var chartT = new Highcharts.Chart({
   chart: {
@@ -168,11 +168,13 @@ setInterval(function () {
   //xhttp.open("GET", "http://"+window.location.hostname+"/temperature", true);
   xhttp.open(
     "GET",
-    "http://" + document.getElementById("source").value + "/voltagedata"+window.location.search,
+    "http://" +
+      document.getElementById("source").value +
+      "/voltagedata" +
+      window.location.search,
     true
   );
   xhttp.send();
-
 }, (1.0 / Frekvens) * 1000);
 document.getElementById("download").addEventListener("click", function () {
   download(chartT.getCSV());
@@ -200,10 +202,14 @@ function download(data) {
   a.click();
 }
 // Add an event listener for the Delete button
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
   if (event.target && event.target.id.startsWith("delete-")) {
     // Get the index from the ID of the Delete button
     var index = parseInt(event.target.id.split("-")[1]);
+    console.log("tf?");
+  } else {
+    
+    
     deleteItem(index);
   }
 });

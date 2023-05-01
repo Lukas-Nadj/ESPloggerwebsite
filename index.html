@@ -330,7 +330,7 @@
         <button
           style="width:20px; height:20px; display: flex; justify-content: center; border-width: 1px; border-radius: 5px; background-color: #FFFFFF;"
           onclick="addLinesToList()"> &#8634;</button>
-        
+
         <!--
           <button
           style="width:20px; height:20px; display: flex; justify-content: center; border-width: 1px; border-radius: 5px; background-color: #FFFFFF;"
@@ -404,6 +404,7 @@
         function deleteItem(index) {
           // Remove the div with the given index from the list
           var itemToDelete = document.getElementById("item-" + index);
+          console.log("test");
           itemToDelete.parentNode.removeChild(itemToDelete);
         }
         function clearList() {
@@ -473,7 +474,20 @@
         }
 
         setInterval(function () {
-   
+
+
+
+          const urltest = `http://info.cern.ch/`;
+          const xhrtest = new XMLHttpRequest();
+          xhrtest.open("GET", urltest);
+          xhrtest.onload = function () {
+          };
+          xhrtest.onerror = function () {
+            window.location.href = "./permissionsredirect.html";
+          };
+          xhrtest.send();
+
+
           const url = `http://esp8266.local`;
           const xhr = new XMLHttpRequest();
           xhr.open("GET", url);
@@ -486,8 +500,9 @@
               console.log("no sir " + url);
             }
           };
+
           xhr.send();
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 10; i++) { //iterere over esp navne
             const url = `http://esp8266-${i}.local`;
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
@@ -497,7 +512,17 @@
                 addTowifi(trimmedUrl);
                 console.log("yessir");
               } else {
+                console.error(xhr.statusText, xhr.status, xhr.readyState);
                 console.log("no sir " + url);
+              }
+            };
+
+            xhr.onerror = function () {
+              console.error('Error checking insecure content permission', xhr.status, xhr.readyState);
+              console.log("output", xhr.status);
+              if (!xhr.status && xhr.readyState === 4 && xhr.statusText !== "OK") {
+
+                //window.location.href = "./permissionsredirect.html";
               }
             };
             xhr.send();
