@@ -295,50 +295,50 @@
     }
 
     .button-18 {
-  align-items: center;
-  background-color: #0A66C2;
-  border: 0;
-  border-radius: 100px;
-  box-sizing: border-box;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  justify-content: center;
-  line-height: 20px;
-  max-width: 20px;
-  min-height: 20px;
-  min-width: 0px;
-  overflow: hidden;
-  padding: 0px;
-  padding-left: 20px;
-  padding-right: 20px;
-  text-align: center;
-  touch-action: manipulation;
-  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-  user-select: none;
-  -webkit-user-select: none;
-  vertical-align: middle;
-}
+      align-items: center;
+      background-color: #0A66C2;
+      border: 0;
+      border-radius: 100px;
+      box-sizing: border-box;
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      justify-content: center;
+      line-height: 20px;
+      max-width: 20px;
+      min-height: 20px;
+      min-width: 0px;
+      overflow: hidden;
+      padding: 0px;
+      padding-left: 20px;
+      padding-right: 20px;
+      text-align: center;
+      touch-action: manipulation;
+      transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+      user-select: none;
+      -webkit-user-select: none;
+      vertical-align: middle;
+    }
 
-.button-18:hover,
-.button-18:focus { 
-  background-color: #16437E;
-  color: #ffffff;
-}
+    .button-18:hover,
+    .button-18:focus {
+      background-color: #16437E;
+      color: #ffffff;
+    }
 
-.button-18:active {
-  background: #09223b;
-  color: rgb(255, 255, 255, .7);
-}
+    .button-18:active {
+      background: #09223b;
+      color: rgb(255, 255, 255, .7);
+    }
 
-.button-18:disabled { 
-  cursor: not-allowed;
-  background: rgba(0, 0, 0, .08);
-  color: rgba(0, 0, 0, .3);
-}
+    .button-18:disabled {
+      cursor: not-allowed;
+      background: rgba(0, 0, 0, .08);
+      color: rgba(0, 0, 0, .3);
+    }
   </style>
 </head>
 
@@ -347,7 +347,7 @@
     <div class="nav" style="overflow: hidden;">
       <div class="card">
         <h3 class="text">Forsøgs parameter</h3>
-        <p class="logo" style="font-size:XX-large; -webkit-text-fill-color: #000000 ;">+</p>
+        <p class="logo" style="font-size:xx-large; -webkit-text-fill-color: #000000 ;">+</p>
       </div>
       <div class="vis" style="border-radius: 10;">
         <form action="./Voltage.html">
@@ -384,8 +384,7 @@
 
       </div>
       <div style="display:flex;" class="vis">
-        <button
-          style="width:20px; height:20px; display: flex; justify-content: center;" class="button-18" role="button"
+        <button style="width:20px; height:20px; display: flex; justify-content: center;" class="button-18" role="button"
           onclick="addLinesToList()"> &#8634;</button>
         <!--
           <button
@@ -620,11 +619,60 @@
     <div class="data"
       style=" width: 800px; display:flex; flex-direction: column; justify-content:flex-start;align-items: center; padding-right: 20px;gap:0px">
       <div style="width: auto; height:auto; border-radius: 20px;" id="chart-temperature" class="container"></div>
-      <div style="width:600px">
-        <div class="text">
-          <p style="margin:0px; margin-left: 20px; -webkit-text-fill-color: #ABCAE7;"> *Ikke representativt af alt
-            daten, kun lokal data</p>
+      <div style="width:600px; height:30px;">
+        <div class="text" style="width:600px">
+          <p style="margin:0px; margin-left: 20px; -webkit-text-fill-color: #ABCAE7; "> *Ikke representativt af alt
+            daten, kun browser data</p>
         </div>
+          <br>
+
+          <div style="background-color:#FFFFFF; height: 40px; width:calc(100%-10px); justify-self: flex-end; border: 1px solid #000000; border-radius: 5px; padding: 5px">
+           <p style="line-height: normal; margin: 2px;">ESP LOGGERENS STATUS</p>
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <p style="display: inline;">Status: </p>
+            <p id="status" style=" display: inline;"></p>
+          </div>
+          <script defer>
+            const statusTag = document.getElementById('status');
+            const pingInterval = 500;
+
+            function ping() {
+              const xhr = new XMLHttpRequest();
+              xhr.open('GET', 'http://esp8266.local/toggle?formål=PING');
+              xhr.onload = function () {
+                if (xhr.status === 200) {
+                  if (xhr.responseText === '1') {
+                    statusTag.innerHTML = '🟩';
+                  } else if (xhr.responseText === '0') {
+                    statusTag.innerHTML = '🟥';
+                  }
+                }
+              };
+              xhr.send();
+            }
+
+            const startButton = document.getElementById('start');
+            const stopButton = document.getElementById('stop');
+            startButton.addEventListener('click', function () {
+              const searchParams = new URLSearchParams(window.location.search);
+              const name = searchParams.get('Frekvens');
+              const xhr = new XMLHttpRequest();
+              xhr.open('GET', 'http://esp8266.local/toggle?formål=start&Frekvens=' + name);
+              xhr.send();
+            });
+            stopButton.addEventListener('click', function () {
+              const searchParams = new URLSearchParams(window.location.search);
+              const name = searchParams.get('Frekvens');
+              const xhr = new XMLHttpRequest();
+              xhr.open('GET', 'http://esp8266.local/toggle?formål=stop&Frekvens=' + name);
+              xhr.send();
+            });
+
+
+            setInterval(ping, pingInterval);
+          </script>
+          
       </div>
     </div>
     <script>
@@ -769,7 +817,7 @@
         xhttp.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
             var x = new Date().getTime(),
-              y = parseFloat(this.responseText);
+              y = parseFloat(this.responseText) / parseFloat(320.0);
 
             //console.log(this.responseText);
             if (chartT.series[0].data.length > Punkter) {
@@ -799,7 +847,7 @@
         //xhttp.open("GET", "http://"+window.location.hostname+"/temperature", true);
         xhttp.open(
           "GET",
-          "http://" + document.getElementById("source").value + "/voltagedata" + window.location.search,
+          "http://" + document.getElementById("source").value + "/" + window.location.search,
           true
         );
         xhttp.send();
